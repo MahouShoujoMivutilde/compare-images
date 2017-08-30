@@ -1,24 +1,33 @@
-## ssim.py
+## cmpi.py
 
-Крохотный скрипт для получения ssim двух изображений с помощью `ffmpeg`.
+Крохотный скрипт-обертка для получения ssim и/или psnr двух изображений с помощью `ffmpeg`.
 
 Написан ввиду нежелания автора устанавливать махину scikit-image со всеми её зависимостями ради одной столь банальной функции.
 
-#### Требования
+### Требования
 * `python 3.4+ `
 * `ffmpeg` в `PATH`
 
-#### Использование
+### Использование
+#### Как отдельный скрипт
 ```
-> ssim.py -ref source.png -c modified.jpg
-SSIM: 0.975639
+> cmpi.py -ref .\result.png -c .\20.jpeg
+PSNR: 38.25
+SSIM: 0.934374
 ```
-или
+__Примечание__: порядок референс-фото и модифицированного чисто условный:
 ```
-from ssim import get_ssim
+> cmpi.py -ref .\20.jpeg -c .\result.png
+PSNR: 38.25
+SSIM: 0.934374
+```
+#### Как модуль
+```
+from cmpi import compare_images
 
 ref = r'path\to\my\ref.png'
 cmp = r'path\to\modified\image.jpg'
 
-ssim_value = get_ssim(ref, cmp)
+ssim_value = compare_images(ref, cmp, 'ssim')
+psnr_value = compare_images(ref, cmp, 'psnr')
 ```
