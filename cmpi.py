@@ -4,8 +4,8 @@ import re
 
 def compare_images(ref_img, cmp_img, method):
     p = subprocess.Popen(['ffmpeg.exe', '-loglevel', 'error', '-i', ref_img, '-i', cmp_img, '-filter_complex', '{}=stats_file=-'.format(method), '-f', 'null', '-'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-    p.wait()
     outs, _ = p.communicate()
+    p.wait()
     if re.match("ssim", method, re.IGNORECASE):
         return float(re.search(r'\bAll:(\d+(?:\.\d+)?)\s', outs.decode('utf-8')).group(0)[4:])
     elif re.match("psnr", method, re.IGNORECASE):
